@@ -24,8 +24,10 @@ public class ArticleController {
         System.out.println(form.toString());
 
         Article article = form.toEntity();
+        System.out.println(article.toString());
 
         Article saved = articleRepository.save(article);
+        System.out.println(saved);
         return "";
     }
 }
