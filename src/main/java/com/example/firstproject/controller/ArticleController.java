@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.Optional;
+import java.util.ArrayList;
 
 @Controller
 @Slf4j
@@ -40,9 +40,14 @@ public class ArticleController {
     @GetMapping("/articles/{id}")
     public String show(@PathVariable Long id, Model model) {
         Article articleEntity = articleRepository.findById(id).orElse(null);
-
         model.addAttribute("article", articleEntity);
-
         return "articles/show";
+    }
+
+    @GetMapping("/articles")
+    public String index(Model model) {
+        ArrayList<Article> articleEntityList = articleRepository.findAll();
+        model.addAttribute("articleList", articleEntityList);
+        return "articles/index";
     }
 }
