@@ -1,7 +1,9 @@
 package com.example.firstproject.service;
 
 import com.example.firstproject.dto.ArticleForm;
+import com.example.firstproject.dto.CoffeeDto;
 import com.example.firstproject.entity.Article;
+import com.example.firstproject.entity.Coffee;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -75,6 +77,70 @@ class ArticleServiceTest {
         Article expected = null;
 
         Article article = articleService.create(dto);
+
+        assertEquals(expected, article);
+    }
+
+    @Test
+    void update_성공_존재하는_id와_title_content가_있는_dto_입력() {
+        Long id = 1L;
+        String title = "가가가가가";
+        String content = "11111";
+        ArticleForm dto = new ArticleForm(id, title, content);
+
+        Article expected = new Article(id, title, content);
+
+        Article coffee = articleService.update(id, dto);
+
+        assertEquals(expected.toString(), coffee.toString());
+    }
+
+    @Test
+    void update_성공_존재하는_id와_title만_있는_dto_입력() {
+        Long id = 1L;
+        String title = "가가가가가가가";
+        String content = null;
+        ArticleForm dto = new ArticleForm(id, title, content);
+
+        Article expected = new Article(id, title, "111");
+
+        Article article = articleService.update(id, dto);
+
+        assertEquals(expected.toString(), article.toString());
+    }
+
+    @Test
+    void update_실패_존재하지_않는_id의_dto_입력() {
+        Long id = -1L;
+        String title = "가가가가가가가가";
+        String content = "123123";
+        ArticleForm dto = new ArticleForm(id, title, content);
+
+        Article expected = null;
+
+        Article article = articleService.update(id, dto);
+
+        assertEquals(expected, article);
+    }
+
+    @Test
+    void delete_성공_존재하는_id_입력() {
+        Long id = 1L;
+
+        Article expected = new Article(id, "가가가", "111");
+
+        Article article = articleService.delete(id);
+
+        assertEquals(expected.toString(), article.toString());
+    }
+
+    @Test
+    void delete_실패_존재하지_않는_id_입력() {
+        Long id = -1L;
+
+        Article expected = null;
+
+        Article article = articleService.delete(id);
 
         assertEquals(expected, article);
     }
